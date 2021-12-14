@@ -1,6 +1,6 @@
 ﻿namespace TestTAP.Services.Interfaces
 {
-    using TestTAP.Models;
+    using TestTAP.Dtos;
 
     /// <summary>
     /// Сервис для работы с сотрудниками.
@@ -8,31 +8,32 @@
     public interface IPersonService
     {
         /// <summary>
-        /// Получить всех сотрудников.
+        /// Получить DTO всех сотрудников.
         /// </summary>
         /// <returns> Список сотрудников. </returns>
-        Task<List<Person>> GetAllAsync();
+        Task<List<PersonDto>> GetAllAsync();
 
         /// <summary>
-        /// Получить конкретного сотрудника.
+        /// Получить DTO конкретного сотрудника.
         /// </summary>
-        /// <param name="id">Идентификатор сотрудника.</param>
+        /// <param name="id"> Идентификатор сотрудника. </param>
         /// <returns> Сотрудник по идентификатору. </returns>
-        Task<Person> GetByIdAsync(long id);
+        Task<PersonDto> GetByIdAsync(long id);
 
         /// <summary>
         /// Добавить сотрудника.
         /// </summary>
-        /// <param name="person"> Сотрудник. </param>
+        /// <param name="personDto"> Данные нового сотрудника. </param>
         /// <returns></returns>
-        Task CreateAsync(Person person);
+        Task CreateAsync(PersonDto personDto);
 
         /// <summary>
-        /// Редактировать сотрудника.
+        /// Изменить данные сотрудника.
         /// </summary>
-        /// <param name="person"> Сотрудник. </param>
+        /// <param name="id"> Идентификатор сотрудника. </param>
+        /// <param name="personDto"> Новые данные сотрудника. </param>
         /// <returns></returns>
-        Task EditAsync(Person person);
+        Task EditAsync(long id, PersonDto personDto);
 
         /// <summary>
         /// Удалить сотрудника.

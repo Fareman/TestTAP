@@ -19,15 +19,12 @@
         public DbSet<Skill> Skills { get; set; }
 
         /// <summary>
-        /// Конструктор.
+        /// Конструктор контекста.
         /// </summary>
         /// <param name="options"> Настройки контекста. </param>
         public PersonContext(DbContextOptions options): base(options)
         {
-        }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
+            Database.EnsureCreated();
         }
     }
 }

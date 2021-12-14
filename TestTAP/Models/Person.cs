@@ -4,22 +4,20 @@
     using System.ComponentModel.DataAnnotations;
 
     /// <summary>
-    /// Сотрудник
+    /// Сотрудник.
     /// </summary>
     public class Person: BaseIdEntity
     {
         /// <summary>
-        /// Имя сотрудника.
+        /// Полное имя сотрудника.
         /// </summary>
         [Required]
-        [RegularExpression(@"^[A-Za-z0-9]+$", ErrorMessage = "The value is incorrect.")]
-        [StringLength(256, MinimumLength = 1, ErrorMessage = "Value for {0} must be from {1} to {2} simbols.")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Ник сотрудника.
+        /// Отображаемое имя сотрудника.
         /// </summary>
-        [StringLength(256, MinimumLength = 1, ErrorMessage = "Value for {0} must be from {1} to {2} simbols.")]
+        [Required]
         public string DisplayName { get; set; }
 
         /// <summary>

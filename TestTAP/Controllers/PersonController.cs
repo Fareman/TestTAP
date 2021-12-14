@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using TestTAP.Models;
+    using TestTAP.Dtos;
     using TestTAP.Services.Interfaces;
 
     /// <summary>
@@ -34,44 +34,56 @@
         }
 
         /// <summary>
-        /// Возвращает массив объектов типа Person.
+        /// Возвращает список всех DTO сотрудников.
         /// </summary>
-        /// <returns> Список сотрудников </returns>
+        /// <returns> Список сотрудников. </returns>
         [HttpGet("persons")]
-        public async Task<ActionResult<List<Person>>> PersonsAsync()
+        public async Task<ActionResult<List<PersonDto>>> PersonsAsync()
         {
-            var persons = await _personService.GetAllAsync();
-            _logger.LogInformation("Getting all the persons.");
-            return persons;
+            try
+            {
+                var personDtos = await _personService.GetAllAsync();
+                return personDtos;
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         /// <summary>
-        /// Возвращает объект типа Person по идентификатору
+        /// Возвращает объект типа PersonDTO по идентификатору.
         /// </summary>
         /// <param name="id"> Идентификатор сотрудника. </param>
-        /// <returns> Сотрудника </returns>
+        /// <returns> Сотрудник. </returns>
         [HttpGet("person/{id}")]
-        public async Task<ActionResult<Person>> PersonAsync(long id)
+        public async Task<ActionResult<PersonDto>> PersonAsync(long id)
         {
-            var person = await _personService.GetByIdAsync(id);
-
-            return person == null ? NotFound() : Ok(person);
+            try
+            {
+                var personDto = await _personService.GetByIdAsync(id);
+                return Ok(personDto);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         /// <summary>
         /// Добавляет сотрудника с набором скилов.
         /// </summary>
-        /// <param name="person"> Данные сотрудника. </param>
+        /// <param name="personDto"> DTO сотрудника. </param>
         /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> AddPersonAsync(Person person)
+        [HttpPost("person")]
+        public async Task<ActionResult> AddPersonAsync(PersonDto personDto)
         {
             if (!ModelState.IsValid)
             {
                 _logger.LogInformation("Insert the correct values.");
                 return BadRequest(ModelState);
             }
-            await _personService.CreateAsync(person);
+            await _personService.CreateAsync(personDto);
             return Ok();
         }
 
@@ -79,17 +91,25 @@
         /// Редактирует данные сотрудника и набор его скилов.
         /// </summary>
         /// <param name="id"> Идентификатор сотрудника. </param>
+        /// <param name="personDto"> Новые данные сотрудника. </param>
         /// <returns></returns>
-        [HttpPut]
-        public async Task<IActionResult> EditPersonAsync(Person person)
+        [HttpPut("person/{id}")]
+        public async Task<IActionResult> EditPersonAsync(long id, PersonDto personDto)
         {
-            if(person == null)
+            if(personDto == null)
             {
-                _logger.LogInformation("User tried to edit empty person.");
-                return BadRequest(string.Empty);
+                _logger.LogInformation("User tried to create an empty person.");
+                return BadRequest();
             }
-            await _personService.EditAsync(person);
-            return Ok();
+            try
+            {
+                await _personService.EditAsync(id, personDto);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         /// <summary>
@@ -100,8 +120,15 @@
         [HttpDelete("person/{id}")]
         public async Task<IActionResult> DeletePersonAsync(long id)
         {
-            await _personService.DeleteAsync(id);
-            return Ok();
+            try
+            {
+                await _personService.DeleteAsync(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
     }
 }
