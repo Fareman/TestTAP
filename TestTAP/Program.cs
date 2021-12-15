@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Reflection;
-using AutoMapper;
 using TestTAP.Data;
 using TestTAP.Services;
 using TestTAP.Services.Interfaces;

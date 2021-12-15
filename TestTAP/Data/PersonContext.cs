@@ -24,7 +24,7 @@
         /// <param name="options"> Настройки контекста. </param>
         public PersonContext(DbContextOptions options): base(options)
         {
-            Database.EnsureCreated();
+            Database.Migrate();
         }
     }
 }
