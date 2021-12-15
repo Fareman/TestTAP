@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((ctx, lc) => lc
     .WriteTo.Console()
-    .WriteTo.File("log.text"));
+    .WriteTo.File("log.log"));
 
 builder.Services.AddMvc()
     .ConfigureApiBehaviorOptions(options =>
