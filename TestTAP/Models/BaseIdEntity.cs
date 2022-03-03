@@ -1,18 +1,17 @@
-﻿namespace TestTAP.Models
-{
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace TestTAP.Models;
 
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+/// <summary>
+///     Сущность с ID.
+/// </summary>
+public abstract class BaseIdEntity
+{
     /// <summary>
-    /// Сущность с ID.
+    ///     Идентификатор.
     /// </summary>
-    public abstract class BaseIdEntity
-    {
-        /// <summary>
-        /// Идентификатор.
-        /// </summary>
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
-        public long Id { get; set; }
-    }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Key]
+    public long Id { get; set; }
 }

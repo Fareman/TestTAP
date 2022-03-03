@@ -1,45 +1,44 @@
-﻿namespace TestTAP.Services.Interfaces
+﻿namespace TestTAP.Services.Interfaces;
+
+using TestTAP.Dtos;
+
+/// <summary>
+///     Сервис для работы с сотрудниками.
+/// </summary>
+public interface IPersonService
 {
-    using TestTAP.Dtos;
+    /// <summary>
+    ///     Добавить сотрудника.
+    /// </summary>
+    /// <param name="personDto"> Данные нового сотрудника. </param>
+    /// <returns></returns>
+    Task CreateAsync(PersonDto personDto);
 
     /// <summary>
-    /// Сервис для работы с сотрудниками.
+    ///     Удалить сотрудника.
     /// </summary>
-    public interface IPersonService
-    {
-        /// <summary>
-        /// Получить DTO всех сотрудников.
-        /// </summary>
-        /// <returns> Список сотрудников. </returns>
-        Task<List<PersonDto>> GetAllAsync();
+    /// <param name="id"> Идентификатор сотрудника. </param>
+    /// <returns></returns>
+    Task DeleteAsync(long id);
 
-        /// <summary>
-        /// Получить DTO конкретного сотрудника.
-        /// </summary>
-        /// <param name="id"> Идентификатор сотрудника. </param>
-        /// <returns> Сотрудник по идентификатору. </returns>
-        Task<PersonDto> GetByIdAsync(long id);
+    /// <summary>
+    ///     Изменить данные сотрудника.
+    /// </summary>
+    /// <param name="id"> Идентификатор сотрудника. </param>
+    /// <param name="personDto"> Новые данные сотрудника. </param>
+    /// <returns></returns>
+    Task EditAsync(long id, PersonDto personDto);
 
-        /// <summary>
-        /// Добавить сотрудника.
-        /// </summary>
-        /// <param name="personDto"> Данные нового сотрудника. </param>
-        /// <returns></returns>
-        Task CreateAsync(PersonDto personDto);
+    /// <summary>
+    ///     Получить DTO всех сотрудников.
+    /// </summary>
+    /// <returns> Список сотрудников. </returns>
+    Task<List<PersonDto>> GetAllAsync();
 
-        /// <summary>
-        /// Изменить данные сотрудника.
-        /// </summary>
-        /// <param name="id"> Идентификатор сотрудника. </param>
-        /// <param name="personDto"> Новые данные сотрудника. </param>
-        /// <returns></returns>
-        Task EditAsync(long id, PersonDto personDto);
-
-        /// <summary>
-        /// Удалить сотрудника.
-        /// </summary>
-        /// <param name="id"> Идентификатор сотрудника. </param>
-        /// <returns></returns>
-        Task DeleteAsync(long id);
-    }
+    /// <summary>
+    ///     Получить DTO конкретного сотрудника.
+    /// </summary>
+    /// <param name="id"> Идентификатор сотрудника. </param>
+    /// <returns> Сотрудник по идентификатору. </returns>
+    Task<PersonDto> GetByIdAsync(long id);
 }
